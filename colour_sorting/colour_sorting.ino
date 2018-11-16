@@ -4,12 +4,16 @@
  int S3 =7;
 int sensorOut =8;
 int frequency = 0;
+Servo topServo;
+Servo bottomServo;
 void setup() {
   pinMode(S0, OUTPUT);
   pinMode(S1, OUTPUT);
   pinMode(S2, OUTPUT);
   pinMode(S3, OUTPUT);
   pinMode(sensorOut, INPUT);
+   topServo.attach(12);
+  bottomServo.attach(2);
   
   // Setting frequency-scaling to 20%
   digitalWrite(S0,HIGH);
@@ -18,6 +22,15 @@ void setup() {
   Serial.begin(9600);
 }
 void loop() {
+  switch (color) {
+    case 1:
+    bottomServo.write(45);
+    break;
+    case 2:
+    bottomServo.write(135);
+    break;
+}
+int readcolour()
   // Setting red filtered photodiodes to be read
   digitalWrite(S2,LOW);
   digitalWrite(S3,LOW);
@@ -39,4 +52,12 @@ void loop() {
   Serial.print(frequency);//printing RED color frequency
   Serial.println("  ");
   delay(100);
-}
+
+if(R<45 & R>32 & G<65 & G>55){
+    color = 1; // Red
+  }
+ if (G<58 & G>45 & B<40 &B>26){
+    color = 2; // Blue
+  }
+  return color;  
+  }
